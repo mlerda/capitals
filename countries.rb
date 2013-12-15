@@ -6,7 +6,7 @@ class Countries
 	end
 
 	def to_hash
-		return { capital: @capital }
+		return {capital: @capital}
 	end
 
 	
