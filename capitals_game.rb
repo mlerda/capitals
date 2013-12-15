@@ -12,18 +12,16 @@ attr_accessor :country
     	gets.strip
   	end
 
-  	def display_countries
-		country.join("\n")
+	def get_from_worldbank
+		response = RestClient.get("http://api.worldbank.org/countries/bm?format=json") 
+		parsed = JSON.parse(response)
+		country_capital = parsed[1][0]["capitalCity"]
+		@country << Countries.new({capital: country_capital})	
 	end
 
-	def get_from_worldbank
-		response = RestClient.get("http://api.worldbank.org/country?region=NAC&format=json")
-		parsed = JSON.parse(response)
-		parsed[1].each do |north|
-			country_name = north["name"]
-			country_capital = north["capitalCity"]
-			@country << Countries.new({name: country_name, capital: country_capital})
-		end		
+
+  	def display_countries
+		country.to_s
 	end
 
 end
